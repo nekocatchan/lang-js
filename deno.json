@@ -1,5 +1,8 @@
 {
   "tasks": {
     "run": "deno run --allow-read run.js"
+  },
+  "imports": {
+    "@std/testing": "jsr:@std/testing@^1.0.8"
   }
 }
