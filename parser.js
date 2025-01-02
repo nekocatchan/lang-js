@@ -9,31 +9,13 @@ const parse = (tokens) => {
     throw new Error("Expected a number");
   };
 
-  const parseExponentiation = () => {
-    let left = parsePrimary();
-
-    while (index < tokens.length && tokens[index].value === "^") {
-      const operator = tokens[index++];
-
-      const right = parsePrimary();
-      left = {
-        type: "BinaryExpression",
-        operator: operator.value,
-        left,
-        right,
-      };
-    }
-
-    return left;
-  };
-
   const parseMultiplicative = () => {
-    let left = parseExponentiation();
+    let left = parsePrimary();
 
     while (index < tokens.length && tokens[index].value === "*") {
       const operator = tokens[index++];
 
-      const right = parseExponentiation();
+      const right = parsePrimary();
       left = {
         type: "BinaryExpression",
         operator: operator.value,
@@ -63,25 +45,7 @@ const parse = (tokens) => {
     return left;
   };
 
-  const parseModulus = () => {
-    let left = parseAdditive();
-
-    while (index < tokens.length && tokens[index].value === "mod") {
-      const operator = tokens[index++];
-
-      const right = parseMultiplicative();
-      left = {
-        type: "BinaryExpression",
-        operator: operator.value,
-        left,
-        right,
-      };
-    }
-
-    return left;
-  };
-
-  return parseModulus();
+  return parseAdditive();
 };
 
 export { parse };

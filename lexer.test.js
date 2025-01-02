@@ -18,21 +18,3 @@ Deno.test("42 * 8", () => {
     { type: "Number", value: 8 },
   ]);
 });
-
-Deno.test("2^3", () => {
-  const tokens = tokenize("2^3");
-  assertEquals(tokens, [
-    { type: "Number", value: 2 },
-    { type: "Operator", value: "^" },
-    { type: "Number", value: 3 },
-  ]);
-});
-
-Deno.test("10 mod 3", () => {
-  const tokens = tokenize("10 mod 3");
-  assertEquals(tokens, [
-    { type: "Number", value: 10 },
-    { type: "Operator", value: "mod" },
-    { type: "Number", value: 3 },
-  ]);
-});

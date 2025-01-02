@@ -24,15 +24,9 @@ const tokenize = (input) => {
       continue;
     }
 
-    if (char === "+" || char === "*" || char === "^") {
+    if (char === "+" || char === "*") {
       tokens.push({ type: "Operator", value: char });
       i++;
-      continue;
-    }
-
-    if (input.slice(i, i + 3) === "mod") {
-      tokens.push({ type: "Operator", value: "mod" });
-      i += 3;
       continue;
     }
 
