@@ -67,3 +67,20 @@ Deno.test("42 / 6", () => {
 
   assertEquals(result, 7);
 });
+
+Deno.test("-42+10", () => {
+  const ast = {
+    type: "BinaryExpression",
+    operator: "+",
+    left: {
+      type: "UnaryExpression",
+      operator: "-",
+      argument: { type: "Number", value: 42 },
+    },
+    right: { type: "Number", value: 10 },
+  };
+
+  const result = interpret(ast);
+
+  assertEquals(result, -32);
+});

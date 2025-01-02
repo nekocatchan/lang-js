@@ -99,3 +99,25 @@ Deno.test("42 / 8", () => {
     right: { type: "Number", value: 8 },
   });
 });
+
+Deno.test("-42 + 10", () => {
+  const tokens = [
+    { type: "Operator", value: "-" },
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "+" },
+    { type: "Number", value: 10 },
+  ];
+
+  const ast = parse(tokens);
+
+  assertEquals(ast, {
+    type: "BinaryExpression",
+    operator: "+",
+    left: {
+      type: "UnaryExpression",
+      operator: "-",
+      argument: { type: "Number", value: 42 },
+    },
+    right: { type: "Number", value: 10 },
+  });
+});

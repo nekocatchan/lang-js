@@ -36,3 +36,11 @@ Deno.test("42 / 8", () => {
     { type: "Number", value: 8 },
   ]);
 });
+
+Deno.test("-42", () => {
+  const tokens = tokenize("-42");
+  assertEquals(tokens, [
+    { type: "Operator", value: "-" },
+    { type: "Number", value: 42 },
+  ]);
+});

@@ -30,8 +30,24 @@ const parse = (tokens) => {
     return left;
   };
 
+  const parseUnary = () => {
+    if (tokens[index].value === "-") {
+      const operator = tokens[index++];
+
+      const argument = parseMultiplicative();
+
+      return {
+        type: "UnaryExpression",
+        operator: operator.value,
+        argument,
+      };
+    }
+
+    return parseMultiplicative();
+  };
+
   const parseAdditive = () => {
-    let left = parseMultiplicative();
+    let left = parseUnary();
 
     while (
       index < tokens.length && (tokens[index].value === "+" ||

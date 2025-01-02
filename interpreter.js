@@ -4,6 +4,19 @@ const interpret = (ast) => {
       return ast.value;
     }
 
+    case "UnaryExpression": {
+      const argument = interpret(ast.argument);
+
+      switch (ast.operator) {
+        case "-": {
+          return -argument;
+        }
+        default: {
+          throw new Error(`Unknown operator: ${ast.operator}`);
+        }
+      }
+    }
+
     case "BinaryExpression": {
       const left = interpret(ast.left);
       const right = interpret(ast.right);
