@@ -12,7 +12,10 @@ const parse = (tokens) => {
   const parseMultiplicative = () => {
     let left = parsePrimary();
 
-    while (index < tokens.length && tokens[index].value === "*") {
+    while (
+      index < tokens.length && (tokens[index].value === "*" ||
+        tokens[index].value === "/")
+    ) {
       const operator = tokens[index++];
 
       const right = parsePrimary();

@@ -82,3 +82,20 @@ Deno.test("42 + 8*50", () => {
     },
   });
 });
+
+Deno.test("42 / 8", () => {
+  const tokens = [
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "/" },
+    { type: "Number", value: 8 },
+  ];
+
+  const ast = parse(tokens);
+
+  assertEquals(ast, {
+    type: "BinaryExpression",
+    operator: "/",
+    left: { type: "Number", value: 42 },
+    right: { type: "Number", value: 8 },
+  });
+});

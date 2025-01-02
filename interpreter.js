@@ -18,6 +18,9 @@ const interpret = (ast) => {
         case "*": {
           return left * right;
         }
+        case "/": {
+          return left / right;
+        }
         default: {
           throw new Error(`Unknown operator: ${ast.operator}`);
         }
