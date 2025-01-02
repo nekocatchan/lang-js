@@ -9,3 +9,12 @@ Deno.test("足し算", () => {
     { type: "Number", value: 10 },
   ]);
 });
+
+Deno.test("42 * 8", () => {
+  const tokens = tokenize("42 * 8");
+  assertEquals(tokens, [
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "*" },
+    { type: "Number", value: 8 },
+  ]);
+});

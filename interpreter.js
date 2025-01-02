@@ -8,11 +8,17 @@ const interpret = (ast) => {
       const left = interpret(ast.left);
       const right = interpret(ast.right);
 
-      if (ast.operator === "+") {
-        return left + right;
+      switch (ast.operator) {
+        case "+": {
+          return left + right;
+        }
+        case "*": {
+          return left * right;
+        }
+        default: {
+          throw new Error(`Unknown operator: ${ast.operator}`);
+        }
       }
-
-      throw new Error(`Unknown operator: ${ast.operator}`);
     }
 
     default: {
