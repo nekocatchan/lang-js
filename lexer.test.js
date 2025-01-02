@@ -79,3 +79,21 @@ Deno.test("42 ~= 30 + 8", () => {
     { type: "Number", value: 8 },
   ]);
 });
+
+Deno.test("42 < 32", () => {
+  const tokens = tokenize("42 < 32");
+  assertEquals(tokens, [
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "<" },
+    { type: "Number", value: 32 },
+  ]);
+});
+
+Deno.test("42 <= 32", () => {
+  const tokens = tokenize("42 <= 32");
+  assertEquals(tokens, [
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "<=" },
+    { type: "Number", value: 32 },
+  ]);
+});

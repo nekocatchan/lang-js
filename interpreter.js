@@ -39,6 +39,14 @@ const interpretBinaryExpression = (ast) => {
       return left * right;
     case "/":
       return left / right;
+    case "<":
+      return left < right;
+    case "<=":
+      return left <= right;
+    case ">":
+      return left > right;
+    case ">=":
+      return left >= right;
     case "=":
       return left === right;
     case "~=":

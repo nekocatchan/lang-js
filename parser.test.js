@@ -171,3 +171,37 @@ Deno.test("42 = 38 + 4", () => {
     },
   });
 });
+
+Deno.test("42 < 32", () => {
+  const tokens = [
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "<" },
+    { type: "Number", value: 32 },
+  ];
+
+  const ast = parse(tokens);
+
+  assertEquals(ast, {
+    type: "BinaryExpression",
+    operator: "<",
+    left: { type: "Number", value: 42 },
+    right: { type: "Number", value: 32 },
+  });
+});
+
+Deno.test("42 <= 32", () => {
+  const tokens = [
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "<=" },
+    { type: "Number", value: 32 },
+  ];
+
+  const ast = parse(tokens);
+
+  assertEquals(ast, {
+    type: "BinaryExpression",
+    operator: "<=",
+    left: { type: "Number", value: 42 },
+    right: { type: "Number", value: 32 },
+  });
+});

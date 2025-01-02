@@ -75,8 +75,30 @@ const parse = (tokens) => {
     return left;
   };
 
-  const parseEquality = () => {
+  const parseRelational = () => {
     let left = parseAdditive();
+
+    while (
+      index < tokens.length &&
+      (tokens[index].value === "<" || tokens[index].value === ">" ||
+        tokens[index].value === "<=" || tokens[index].value === ">=")
+    ) {
+      const operator = tokens[index];
+      index += 1;
+      const right = parseAdditive();
+      left = {
+        type: "BinaryExpression",
+        operator: operator.value,
+        left,
+        right,
+      };
+    }
+
+    return left;
+  };
+
+  const parseEquality = () => {
+    let left = parseRelational();
 
     while (
       index < tokens.length &&
@@ -84,7 +106,7 @@ const parse = (tokens) => {
     ) {
       const operator = tokens[index];
       index += 1;
-      const right = parseAdditive();
+      const right = parseRelational();
       left = {
         type: "BinaryExpression",
         operator: operator.value,
