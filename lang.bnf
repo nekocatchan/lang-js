@@ -1,7 +1,10 @@
-expr ::= equality
-equality ::= relational ('=' relational | '~=' relational)*
-relational ::= add ('<' add | '<=' add | '>' add | '>=' add)*
+program ::= stmt*
+stmt ::= expr ';' | let_stmt
+let_stmt ::= 'let' ident '=' expr ';'
+expr ::= eql
+eql ::= rel ('=' rel | '~=' rel)*
+rel ::= add ('<' add | '<=' add | '>' add | '>=' add)*
 add ::= unary ('+' mul | '-' mul)*
 unary ::= '-'? mul
 mul ::= primary ('*' primary | '/' primary)*
-primary ::= number | '(' expr ')'
+primary ::= number | ident | '(' expr ')'
