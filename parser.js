@@ -2,11 +2,11 @@ const parse = (tokens) => {
   let index = 0;
 
   const parsePrimary = () => {
-    const token = tokens[index++];
+    const token = tokens[index];
+    index += 1;
     if (token.type === "Number") {
       return { type: "Number", value: token.value };
     }
-
     if (token.type === "Operator" && token.value === "(") {
       const node = parseAdditive();
       if (tokens[index].type === "Operator" && tokens[index].value === ")") {
@@ -22,11 +22,11 @@ const parse = (tokens) => {
     let left = parsePrimary();
 
     while (
-      index < tokens.length && (tokens[index].value === "*" ||
-        tokens[index].value === "/")
+      index < tokens.length &&
+      (tokens[index].value === "*" || tokens[index].value === "/")
     ) {
-      const operator = tokens[index++];
-
+      const operator = tokens[index];
+      index += 1;
       const right = parsePrimary();
       left = {
         type: "BinaryExpression",
@@ -41,10 +41,9 @@ const parse = (tokens) => {
 
   const parseUnary = () => {
     if (tokens[index].value === "-") {
-      const operator = tokens[index++];
-
+      const operator = tokens[index];
+      index += 1;
       const argument = parseMultiplicative();
-
       return {
         type: "UnaryExpression",
         operator: operator.value,
@@ -59,11 +58,11 @@ const parse = (tokens) => {
     let left = parseUnary();
 
     while (
-      index < tokens.length && (tokens[index].value === "+" ||
-        tokens[index].value === "-")
+      index < tokens.length &&
+      (tokens[index].value === "+" || tokens[index].value === "-")
     ) {
-      const operator = tokens[index++];
-
+      const operator = tokens[index];
+      index += 1;
       const right = parseMultiplicative();
       left = {
         type: "BinaryExpression",
