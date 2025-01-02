@@ -65,3 +65,20 @@ Deno.test("42 + 8*50", () => {
     },
   });
 });
+
+Deno.test("2^3", () => {
+  const tokens = [
+    { type: "Number", value: 2 },
+    { type: "Operator", value: "^" },
+    { type: "Number", value: 3 },
+  ];
+
+  const ast = parse(tokens);
+
+  assertEquals(ast, {
+    type: "BinaryExpression",
+    operator: "^",
+    left: { type: "Number", value: 2 },
+    right: { type: "Number", value: 3 },
+  });
+});

@@ -9,13 +9,31 @@ const parse = (tokens) => {
     throw new Error("Expected a number");
   };
 
-  const parseMultiplicative = () => {
+  const parseExponentiation = () => {
     let left = parsePrimary();
+
+    while (index < tokens.length && tokens[index].value === "^") {
+      const operator = tokens[index++];
+
+      const right = parsePrimary();
+      left = {
+        type: "BinaryExpression",
+        operator: operator.value,
+        left,
+        right,
+      };
+    }
+
+    return left;
+  };
+
+  const parseMultiplicative = () => {
+    let left = parseExponentiation();
 
     while (index < tokens.length && tokens[index].value === "*") {
       const operator = tokens[index++];
 
-      const right = parsePrimary();
+      const right = parseExponentiation();
       left = {
         type: "BinaryExpression",
         operator: operator.value,
