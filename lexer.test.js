@@ -97,3 +97,8 @@ Deno.test("42 <= 32", () => {
     { type: "Number", value: 32 },
   ]);
 });
+
+Deno.test("comment", () => {
+  const tokens = tokenize("42 ; comment");
+  assertEquals(tokens, [{ type: "Number", value: 42 }]);
+});

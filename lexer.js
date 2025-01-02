@@ -13,6 +13,13 @@ const tokenize = (input) => {
       continue;
     }
 
+    if (char === ";") {
+      while (i < input.length && input[i] !== "\n") {
+        i += 1;
+      }
+      continue;
+    }
+
     if (isDigit(char)) {
       let number = "";
       while (i < input.length && isDigit(input[i])) {
