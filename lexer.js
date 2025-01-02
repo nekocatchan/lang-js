@@ -30,6 +30,12 @@ const tokenize = (input) => {
       continue;
     }
 
+    if (input.slice(i, i + 3) === "mod") {
+      tokens.push({ type: "Operator", value: "mod" });
+      i += 3;
+      continue;
+    }
+
     throw Error("syntax error");
   }
 

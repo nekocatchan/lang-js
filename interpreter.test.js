@@ -49,3 +49,16 @@ Deno.test("2^3", () => {
 
   assertEquals(result, 8);
 });
+
+Deno.test("10 mod 3", () => {
+  const ast = {
+    type: "BinaryExpression",
+    operator: "mod",
+    left: { type: "Number", value: 10 },
+    right: { type: "Number", value: 3 },
+  };
+
+  const result = interpret(ast);
+
+  assertEquals(result, 1);
+});

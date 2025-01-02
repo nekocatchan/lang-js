@@ -63,7 +63,25 @@ const parse = (tokens) => {
     return left;
   };
 
-  return parseAdditive();
+  const parseModulus = () => {
+    let left = parseAdditive();
+
+    while (index < tokens.length && tokens[index].value === "mod") {
+      const operator = tokens[index++];
+
+      const right = parseMultiplicative();
+      left = {
+        type: "BinaryExpression",
+        operator: operator.value,
+        left,
+        right,
+      };
+    }
+
+    return left;
+  };
+
+  return parseModulus();
 };
 
 export { parse };
