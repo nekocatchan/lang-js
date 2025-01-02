@@ -44,3 +44,16 @@ Deno.test("-42", () => {
     { type: "Number", value: 42 },
   ]);
 });
+
+Deno.test("(42 + 8) * 50", () => {
+  const tokens = tokenize("(42 + 8) * 50");
+  assertEquals(tokens, [
+    { type: "Operator", value: "(" },
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "+" },
+    { type: "Number", value: 8 },
+    { type: "Operator", value: ")" },
+    { type: "Operator", value: "*" },
+    { type: "Number", value: 50 },
+  ]);
+});

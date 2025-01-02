@@ -24,7 +24,10 @@ const tokenize = (input) => {
       continue;
     }
 
-    if (char === "+" || char === "-" || char === "*" || char === "/") {
+    if (
+      char === "+" || char === "-" || char === "*" || char === "/" ||
+      char === "(" || char === ")"
+    ) {
       tokens.push({ type: "Operator", value: char });
       i++;
       continue;

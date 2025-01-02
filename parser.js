@@ -6,7 +6,16 @@ const parse = (tokens) => {
     if (token.type === "Number") {
       return { type: "Number", value: token.value };
     }
-    throw new Error("Expected a number");
+
+    if (token.type === "Operator" && token.value === "(") {
+      const node = parseAdditive();
+      if (tokens[index].type === "Operator" && tokens[index].value === ")") {
+        index++;
+        return node;
+      }
+      throw new Error("Expected a closing parenthesis");
+    }
+    throw new Error("Expected a number or an opening parenthesis");
   };
 
   const parseMultiplicative = () => {
