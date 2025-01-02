@@ -13,7 +13,7 @@ const tokenize = (input) => {
       continue;
     }
 
-    if (char === ";") {
+    if (char === "#") {
       while (i < input.length && input[i] !== "\n") {
         i += 1;
       }

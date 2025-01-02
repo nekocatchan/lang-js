@@ -8,10 +8,10 @@ deno task run examples/program.lng
 
 ## コメント
 
-コメントは `;` で開始します
+コメントは `#` で開始します
 
 ```
-; this is a comment
+# this is a comment
 ```
 
 ## 演算
@@ -26,10 +26,10 @@ deno task run examples/program.lng
 - 先頭にない単項演算子 - は括弧で囲む必要がある
 
 ```
-+42      ; ❌ NG
-2 * -3   ; ❌ NG
-2 * (-3) ; ✅ OK
--2 * 3   ; ✅ OK
++42      # ❌ NG
+2 * -3   # ❌ NG
+2 * (-3) # ✅ OK
+-2 * 3   # ✅ OK
 ```
 
 ### 比較演算
