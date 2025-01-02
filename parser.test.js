@@ -42,6 +42,23 @@ Deno.test("足し算連続", () => {
   });
 });
 
+Deno.test("42 - 10", () => {
+  const tokens = [
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "-" },
+    { type: "Number", value: 10 },
+  ];
+
+  const ast = parse(tokens);
+
+  assertEquals(ast, {
+    type: "BinaryExpression",
+    operator: "-",
+    left: { type: "Number", value: 42 },
+    right: { type: "Number", value: 10 },
+  });
+});
+
 Deno.test("42 + 8*50", () => {
   const tokens = [
     { type: "Number", value: 42 },

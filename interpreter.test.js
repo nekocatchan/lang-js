@@ -19,6 +19,24 @@ Deno.test("42 + 8 + 50", () => {
   assertEquals(result, 100);
 });
 
+Deno.test("42 - 8 - 50", () => {
+  const ast = {
+    type: "BinaryExpression",
+    operator: "-",
+    left: {
+      type: "BinaryExpression",
+      operator: "-",
+      left: { type: "Number", value: 42 },
+      right: { type: "Number", value: 8 },
+    },
+    right: { type: "Number", value: 50 },
+  };
+
+  const result = interpret(ast);
+
+  assertEquals(result, -16);
+});
+
 Deno.test("42 * 8 * 50", () => {
   const ast = {
     type: "BinaryExpression",

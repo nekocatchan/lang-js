@@ -30,7 +30,10 @@ const parse = (tokens) => {
   const parseAdditive = () => {
     let left = parseMultiplicative();
 
-    while (index < tokens.length && tokens[index].value === "+") {
+    while (
+      index < tokens.length && (tokens[index].value === "+" ||
+        tokens[index].value === "-")
+    ) {
       const operator = tokens[index++];
 
       const right = parseMultiplicative();
