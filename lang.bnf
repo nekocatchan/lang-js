@@ -1,4 +1,5 @@
-expr ::= add
+expr ::= equality
+equality ::= add ('=' add | '~=' add)*
 add ::= unary ('+' mul | '-' mul)*
 unary ::= '-'? mul
 mul ::= primary ('*' primary | '/' primary)*

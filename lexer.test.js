@@ -57,3 +57,25 @@ Deno.test("(42 + 8) * 50", () => {
     { type: "Number", value: 50 },
   ]);
 });
+
+Deno.test("42 = 38 + 4", () => {
+  const tokens = tokenize("42 = 38 + 4");
+  assertEquals(tokens, [
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "=" },
+    { type: "Number", value: 38 },
+    { type: "Operator", value: "+" },
+    { type: "Number", value: 4 },
+  ]);
+});
+
+Deno.test("42 ~= 30 + 8", () => {
+  const tokens = tokenize("42 ~= 30 + 8");
+  assertEquals(tokens, [
+    { type: "Number", value: 42 },
+    { type: "Operator", value: "~=" },
+    { type: "Number", value: 30 },
+    { type: "Operator", value: "+" },
+    { type: "Number", value: 8 },
+  ]);
+});

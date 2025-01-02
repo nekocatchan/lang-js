@@ -84,3 +84,39 @@ Deno.test("-42+10", () => {
 
   assertEquals(result, -32);
 });
+
+Deno.test("42 = 38 + 4", () => {
+  const ast = {
+    type: "BinaryExpression",
+    operator: "=",
+    left: { type: "Number", value: 42 },
+    right: {
+      type: "BinaryExpression",
+      operator: "+",
+      left: { type: "Number", value: 38 },
+      right: { type: "Number", value: 4 },
+    },
+  };
+
+  const result = interpret(ast);
+
+  assertEquals(result, true);
+});
+
+Deno.test("42 ~= 38 + 4", () => {
+  const ast = {
+    type: "BinaryExpression",
+    operator: "~=",
+    left: { type: "Number", value: 42 },
+    right: {
+      type: "BinaryExpression",
+      operator: "+",
+      left: { type: "Number", value: 38 },
+      right: { type: "Number", value: 4 },
+    },
+  };
+
+  const result = interpret(ast);
+
+  assertEquals(result, false);
+});

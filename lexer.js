@@ -23,9 +23,15 @@ const tokenize = (input) => {
       continue;
     }
 
-    if ("+-*/()".includes(char)) {
+    if ("+-*/()=".includes(char)) {
       tokens.push({ type: "Operator", value: char });
       i++;
+      continue;
+    }
+
+    if (input.slice(i, i + 2) === "~=") {
+      tokens.push({ type: "Operator", value: "~=" });
+      i += 2;
       continue;
     }
 
