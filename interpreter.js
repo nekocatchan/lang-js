@@ -1,38 +1,28 @@
-let environment = {};
-
-const interpret = (ast) => {
-  if (ast.type === "Program") {
-    environment = {};
-
-    let result;
-
-    for (const node of ast.body) {
-      result = interpret(node);
-    }
-    return result;
-  }
-
+const interpret = (ast, env) => {
   switch (ast.type) {
+    case "Program":
+      return interpretProgram(ast, {});
+
     case "Number":
       return ast.value;
 
     case "Identifier":
-      return interpretIdentifier(ast);
+      return interpretIdentifier(ast, env);
 
     case "UnaryExpression":
-      return interpretUnaryExpression(ast);
+      return interpretUnaryExpression(ast, env);
 
     case "BinaryExpression":
-      return interpretBinaryExpression(ast);
+      return interpretBinaryExpression(ast, env);
 
     case "ExpressionStatement":
-      return interpretExpressionStatement(ast);
+      return interpretExpressionStatement(ast, env);
 
     case "LetStatement":
-      return interpretLetStatement(ast);
+      return interpretLetStatement(ast, env);
 
     case "SetStatement":
-      return interpretSetStatement(ast);
+      return interpretSetStatement(ast, env);
 
     default: {
       throw new Error(`Unknown AST node type: ${ast.type}`);
@@ -40,18 +30,28 @@ const interpret = (ast) => {
   }
 };
 
-const interpretIdentifier = (ast) => {
+const interpretProgram = (ast, env) => {
+  let result;
+
+  for (const node of ast.body) {
+    result = interpret(node, env);
+  }
+
+  return result;
+};
+
+const interpretIdentifier = (ast, env) => {
   const name = ast.name;
 
-  if (!(name in environment)) {
+  if (!(name in env)) {
     throw new Error(`Identifier ${name} has not been declared`);
   }
 
-  return environment[name];
+  return env[name];
 };
 
-const interpretUnaryExpression = (ast) => {
-  const argument = interpret(ast.argument);
+const interpretUnaryExpression = (ast, env) => {
+  const argument = interpret(ast.argument, env);
 
   if (ast.operator === "-") {
     return -argument;
@@ -60,9 +60,9 @@ const interpretUnaryExpression = (ast) => {
   }
 };
 
-const interpretBinaryExpression = (ast) => {
-  const left = interpret(ast.left);
-  const right = interpret(ast.right);
+const interpretBinaryExpression = (ast, env) => {
+  const left = interpret(ast.left, env);
+  const right = interpret(ast.right, env);
 
   switch (ast.operator) {
     case "+":
@@ -90,34 +90,34 @@ const interpretBinaryExpression = (ast) => {
   }
 };
 
-const interpretExpressionStatement = (ast) => {
-  return interpret(ast.expression);
+const interpretExpressionStatement = (ast, env) => {
+  return interpret(ast.expression, env);
 };
 
-const interpretLetStatement = (ast) => {
+const interpretLetStatement = (ast, env) => {
   const identifier = ast.identifier;
 
-  if (identifier in environment) {
+  if (identifier in env) {
     throw new Error(`Identifier ${identifier} has already been declared`);
   }
 
-  const value = interpret(ast.expression);
+  const value = interpret(ast.expression, env);
 
-  environment[identifier] = value;
+  env[identifier] = value;
 
   return null;
 };
 
-const interpretSetStatement = (ast) => {
+const interpretSetStatement = (ast, env) => {
   const identifier = ast.identifier;
 
-  if (!(identifier in environment)) {
+  if (!(identifier in env)) {
     throw new Error(`Identifier ${identifier} has not been declared`);
   }
 
-  const value = interpret(ast.expression);
+  const value = interpret(ast.expression, env);
 
-  environment[identifier] = value;
+  env[identifier] = value;
 
   return null;
 };
