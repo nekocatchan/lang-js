@@ -14,6 +14,15 @@ deno task run examples/program.lng
 # this is a comment
 ```
 
+## 文
+
+文は `;` で終わります
+
+```
+42 + 8;
+1 + 2;
+```
+
 ## 演算
 
 ### 算術演算
