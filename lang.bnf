@@ -1,11 +1,19 @@
 program ::= stmt*
-stmt ::= expr ';' | let_stmt | set_stmt
+stmt ::= expr ';' | let_stmt | set_stmt | func_def
+
+func_def ::= 'let' ident '(' params ')' '=' expr ';'
+params ::= ident (',' ident)*
+
 let_stmt ::= 'let' ident '=' expr ';'
 set_stmt ::= 'set' ident '=' expr ';'
+
+func_call ::= ident '(' args ')'
+args ::= expr (',' expr)*
+
 expr ::= eql
 eql ::= rel ('=' rel | '~=' rel)*
 rel ::= add ('<' add | '<=' add | '>' add | '>=' add)*
 add ::= unary ('+' mul | '-' mul)*
 unary ::= '-'? mul
 mul ::= primary ('*' primary | '/' primary)*
-primary ::= number | ident | '(' expr ')'
+primary ::= number | ident | '(' expr ')' | func_call
