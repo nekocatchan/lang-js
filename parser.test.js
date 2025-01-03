@@ -357,3 +357,26 @@ Deno.test("let x = 42 ;", () => {
     ],
   });
 });
+
+Deno.test("set x = 42 ;", () => {
+  const tokens = [
+    { type: "Keyword", value: "set" },
+    { type: "Identifier", value: "x" },
+    { type: "Operator", value: "=" },
+    { type: "Number", value: 42 },
+    { type: "Operator", value: ";" },
+  ];
+
+  const ast = parse(tokens);
+
+  assertEquals(ast, {
+    type: "Program",
+    body: [
+      {
+        type: "SetStatement",
+        identifier: "x",
+        expression: { type: "Number", value: 42 },
+      },
+    ],
+  });
+});

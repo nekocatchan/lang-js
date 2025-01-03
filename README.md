@@ -47,6 +47,9 @@ deno task run examples/program.lng
 
 ## 変数
 
+宣言は `let`, 再代入は `set`
+
 ```
 let x = 42;
+set x = 50;
 ```

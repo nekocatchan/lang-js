@@ -126,3 +126,14 @@ Deno.test("let x = 42 ;", () => {
     { type: "Operator", value: ";" },
   ]);
 });
+
+Deno.test("set x = 42 ;", () => {
+  const tokens = tokenize("set x = 42 ;");
+  assertEquals(tokens, [
+    { type: "Keyword", value: "set" },
+    { type: "Identifier", value: "x" },
+    { type: "Operator", value: "=" },
+    { type: "Number", value: 42 },
+    { type: "Operator", value: ";" },
+  ]);
+});

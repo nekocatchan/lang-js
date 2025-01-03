@@ -28,6 +28,12 @@ const tokenize = (input) => {
       continue;
     }
 
+    if (input.slice(i, i + 3) === "set") {
+      tokens.push({ type: "Keyword", value: "set" });
+      i += 3;
+      continue;
+    }
+
     if (isDigit(char)) {
       let number = "";
       while (i < input.length && isDigit(input[i])) {

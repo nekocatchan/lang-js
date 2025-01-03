@@ -1,6 +1,7 @@
 program ::= stmt*
-stmt ::= expr ';' | let_stmt
+stmt ::= expr ';' | let_stmt | set_stmt
 let_stmt ::= 'let' ident '=' expr ';'
+set_stmt ::= 'set' ident '=' expr ';'
 expr ::= eql
 eql ::= rel ('=' rel | '~=' rel)*
 rel ::= add ('<' add | '<=' add | '>' add | '>=' add)*

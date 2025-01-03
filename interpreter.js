@@ -1,7 +1,9 @@
-const environment = {};
+let environment = {};
 
 const interpret = (ast) => {
   if (ast.type === "Program") {
+    environment = {};
+
     let result;
 
     for (const node of ast.body) {
@@ -28,6 +30,9 @@ const interpret = (ast) => {
 
     case "LetStatement":
       return interpretLetStatement(ast);
+
+    case "SetStatement":
+      return interpretSetStatement(ast);
 
     default: {
       throw new Error(`Unknown AST node type: ${ast.type}`);
@@ -94,6 +99,20 @@ const interpretLetStatement = (ast) => {
 
   if (identifier in environment) {
     throw new Error(`Identifier ${identifier} has already been declared`);
+  }
+
+  const value = interpret(ast.expression);
+
+  environment[identifier] = value;
+
+  return null;
+};
+
+const interpretSetStatement = (ast) => {
+  const identifier = ast.identifier;
+
+  if (!(identifier in environment)) {
+    throw new Error(`Identifier ${identifier} has not been declared`);
   }
 
   const value = interpret(ast.expression);

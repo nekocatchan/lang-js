@@ -156,9 +156,35 @@ const parse = (tokens) => {
     return { type: "LetStatement", identifier, expression };
   };
 
+  const parseSetStatement = () => {
+    if (tokens[index].type !== "Keyword" || tokens[index].value !== "set") {
+      throw new Error("Expected a set keyword");
+    }
+    index += 1;
+    if (tokens[index].type !== "Identifier") {
+      throw new Error("Expected an identifier");
+    }
+    const identifier = tokens[index].value;
+    index += 1;
+    if (tokens[index].type !== "Operator" || tokens[index].value !== "=") {
+      throw new Error("Expected an equal sign");
+    }
+    index += 1;
+    const expression = parseExpression();
+    if (tokens[index].type !== "Operator" || tokens[index].value !== ";") {
+      throw new Error("Expected a semicolon");
+    }
+    index += 1;
+    return { type: "SetStatement", identifier, expression };
+  };
+
   const parseStatement = () => {
     if (tokens[index].type === "Keyword" && tokens[index].value === "let") {
       return parseLetStatement();
+    }
+
+    if (tokens[index].type === "Keyword" && tokens[index].value === "set") {
+      return parseSetStatement();
     }
 
     return parseExpressionStatement();
