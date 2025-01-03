@@ -248,3 +248,31 @@ Deno.test("42 + 8 ; \n 50 - 10 ;", () => {
 
   assertEquals(result, 40);
 });
+
+Deno.test("変数", () => {
+  // let x = 42 ;
+  // x + 8 ; # expect 50
+  const ast = {
+    type: "Program",
+    body: [
+      {
+        type: "LetStatement",
+        identifier: "x",
+        expression: { type: "Number", value: 42 },
+      },
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "+",
+          left: { type: "Identifier", name: "x" },
+          right: { type: "Number", value: 8 },
+        },
+      },
+    ],
+  };
+
+  const result = interpret(ast);
+
+  assertEquals(result, 50);
+});

@@ -334,3 +334,26 @@ Deno.test("42 + 8 ; \n 50 - 10 ;", () => {
     ],
   });
 });
+
+Deno.test("let x = 42 ;", () => {
+  const tokens = [
+    { type: "Keyword", value: "let" },
+    { type: "Identifier", value: "x" },
+    { type: "Operator", value: "=" },
+    { type: "Number", value: 42 },
+    { type: "Operator", value: ";" },
+  ];
+
+  const ast = parse(tokens);
+
+  assertEquals(ast, {
+    type: "Program",
+    body: [
+      {
+        type: "LetStatement",
+        identifier: "x",
+        expression: { type: "Number", value: 42 },
+      },
+    ],
+  });
+});

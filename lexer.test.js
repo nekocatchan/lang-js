@@ -115,3 +115,14 @@ Deno.test("comment", () => {
     { type: "Operator", value: ";" },
   ]);
 });
+
+Deno.test("let x = 42 ;", () => {
+  const tokens = tokenize("let x = 42 ;");
+  assertEquals(tokens, [
+    { type: "Keyword", value: "let" },
+    { type: "Identifier", value: "x" },
+    { type: "Operator", value: "=" },
+    { type: "Number", value: 42 },
+    { type: "Operator", value: ";" },
+  ]);
+});

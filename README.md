@@ -44,3 +44,9 @@ deno task run examples/program.lng
 ### 比較演算
 
 `=`, `~=`, `<`, `<=`, `>`, `>=`
+
+## 変数
+
+```
+let x = 42;
+```

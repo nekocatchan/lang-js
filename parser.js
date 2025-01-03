@@ -7,6 +7,9 @@ const parse = (tokens) => {
     if (token.type === "Number") {
       return { type: "Number", value: token.value };
     }
+    if (token.type === "Identifier") {
+      return { type: "Identifier", name: token.value };
+    }
     if (token.type === "Operator" && token.value === "(") {
       const node = parseAdditive();
       if (tokens[index].type === "Operator" && tokens[index].value === ")") {
@@ -131,7 +134,33 @@ const parse = (tokens) => {
     throw new Error("Expected a semicolon");
   };
 
+  const parseLetStatement = () => {
+    if (tokens[index].type !== "Keyword" || tokens[index].value !== "let") {
+      throw new Error("Expected a let keyword");
+    }
+    index += 1;
+    if (tokens[index].type !== "Identifier") {
+      throw new Error("Expected an identifier");
+    }
+    const identifier = tokens[index].value;
+    index += 1;
+    if (tokens[index].type !== "Operator" || tokens[index].value !== "=") {
+      throw new Error("Expected an equal sign");
+    }
+    index += 1;
+    const expression = parseExpression();
+    if (tokens[index].type !== "Operator" || tokens[index].value !== ";") {
+      throw new Error("Expected a semicolon");
+    }
+    index += 1;
+    return { type: "LetStatement", identifier, expression };
+  };
+
   const parseStatement = () => {
+    if (tokens[index].type === "Keyword" && tokens[index].value === "let") {
+      return parseLetStatement();
+    }
+
     return parseExpressionStatement();
   };
 

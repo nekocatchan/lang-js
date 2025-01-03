@@ -1,3 +1,5 @@
+const environment = {};
+
 const interpret = (ast) => {
   if (ast.type === "Program") {
     let result;
@@ -12,6 +14,9 @@ const interpret = (ast) => {
     case "Number":
       return ast.value;
 
+    case "Identifier":
+      return interpretIdentifier(ast);
+
     case "UnaryExpression":
       return interpretUnaryExpression(ast);
 
@@ -21,10 +26,23 @@ const interpret = (ast) => {
     case "ExpressionStatement":
       return interpretExpressionStatement(ast);
 
+    case "LetStatement":
+      return interpretLetStatement(ast);
+
     default: {
       throw new Error(`Unknown AST node type: ${ast.type}`);
     }
   }
+};
+
+const interpretIdentifier = (ast) => {
+  const name = ast.name;
+
+  if (!(name in environment)) {
+    throw new Error(`Identifier ${name} has not been declared`);
+  }
+
+  return environment[name];
 };
 
 const interpretUnaryExpression = (ast) => {
@@ -69,6 +87,20 @@ const interpretBinaryExpression = (ast) => {
 
 const interpretExpressionStatement = (ast) => {
   return interpret(ast.expression);
+};
+
+const interpretLetStatement = (ast) => {
+  const identifier = ast.identifier;
+
+  if (identifier in environment) {
+    throw new Error(`Identifier ${identifier} has already been declared`);
+  }
+
+  const value = interpret(ast.expression);
+
+  environment[identifier] = value;
+
+  return null;
 };
 
 export { interpret };
