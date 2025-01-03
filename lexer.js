@@ -42,7 +42,7 @@ const tokenize = (input) => {
       continue;
     }
 
-    if ("+-*/()=<>".includes(char)) {
+    if ("+-*/()=<>;".includes(char)) {
       tokens.push({ type: "Operator", value: char });
       i++;
       continue;

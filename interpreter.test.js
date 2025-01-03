@@ -1,17 +1,25 @@
 import { interpret } from "./interpreter.js";
 import { assertEquals } from "@std/assert";
 
-Deno.test("42 + 8 + 50", () => {
+Deno.test("42 + 8 + 50 ;", () => {
   const ast = {
-    type: "BinaryExpression",
-    operator: "+",
-    left: {
-      type: "BinaryExpression",
-      operator: "+",
-      left: { type: "Number", value: 42 },
-      right: { type: "Number", value: 8 },
-    },
-    right: { type: "Number", value: 50 },
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "+",
+          left: {
+            type: "BinaryExpression",
+            operator: "+",
+            left: { type: "Number", value: 42 },
+            right: { type: "Number", value: 8 },
+          },
+          right: { type: "Number", value: 50 },
+        },
+      },
+    ],
   };
 
   const result = interpret(ast);
@@ -19,17 +27,25 @@ Deno.test("42 + 8 + 50", () => {
   assertEquals(result, 100);
 });
 
-Deno.test("42 - 8 - 50", () => {
+Deno.test("42 - 8 - 50 ;", () => {
   const ast = {
-    type: "BinaryExpression",
-    operator: "-",
-    left: {
-      type: "BinaryExpression",
-      operator: "-",
-      left: { type: "Number", value: 42 },
-      right: { type: "Number", value: 8 },
-    },
-    right: { type: "Number", value: 50 },
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "-",
+          left: {
+            type: "BinaryExpression",
+            operator: "-",
+            left: { type: "Number", value: 42 },
+            right: { type: "Number", value: 8 },
+          },
+          right: { type: "Number", value: 50 },
+        },
+      },
+    ],
   };
 
   const result = interpret(ast);
@@ -37,17 +53,25 @@ Deno.test("42 - 8 - 50", () => {
   assertEquals(result, -16);
 });
 
-Deno.test("42 * 8 * 50", () => {
+Deno.test("42 * 8 * 50 ;", () => {
   const ast = {
-    type: "BinaryExpression",
-    operator: "*",
-    left: {
-      type: "BinaryExpression",
-      operator: "*",
-      left: { type: "Number", value: 42 },
-      right: { type: "Number", value: 8 },
-    },
-    right: { type: "Number", value: 50 },
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "*",
+          left: {
+            type: "BinaryExpression",
+            operator: "*",
+            left: { type: "Number", value: 42 },
+            right: { type: "Number", value: 8 },
+          },
+          right: { type: "Number", value: 50 },
+        },
+      },
+    ],
   };
 
   const result = interpret(ast);
@@ -55,12 +79,20 @@ Deno.test("42 * 8 * 50", () => {
   assertEquals(result, 16800);
 });
 
-Deno.test("42 / 6", () => {
+Deno.test("42 / 6 ;", () => {
   const ast = {
-    type: "BinaryExpression",
-    operator: "/",
-    left: { type: "Number", value: 42 },
-    right: { type: "Number", value: 6 },
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "/",
+          left: { type: "Number", value: 42 },
+          right: { type: "Number", value: 6 },
+        },
+      },
+    ],
   };
 
   const result = interpret(ast);
@@ -68,16 +100,24 @@ Deno.test("42 / 6", () => {
   assertEquals(result, 7);
 });
 
-Deno.test("-42+10", () => {
+Deno.test("-42+10 ;", () => {
   const ast = {
-    type: "BinaryExpression",
-    operator: "+",
-    left: {
-      type: "UnaryExpression",
-      operator: "-",
-      argument: { type: "Number", value: 42 },
-    },
-    right: { type: "Number", value: 10 },
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "+",
+          left: {
+            type: "UnaryExpression",
+            operator: "-",
+            argument: { type: "Number", value: 42 },
+          },
+          right: { type: "Number", value: 10 },
+        },
+      },
+    ],
   };
 
   const result = interpret(ast);
@@ -85,17 +125,25 @@ Deno.test("-42+10", () => {
   assertEquals(result, -32);
 });
 
-Deno.test("42 = 38 + 4", () => {
+Deno.test("42 = 38 + 4 ;", () => {
   const ast = {
-    type: "BinaryExpression",
-    operator: "=",
-    left: { type: "Number", value: 42 },
-    right: {
-      type: "BinaryExpression",
-      operator: "+",
-      left: { type: "Number", value: 38 },
-      right: { type: "Number", value: 4 },
-    },
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "=",
+          left: { type: "Number", value: 42 },
+          right: {
+            type: "BinaryExpression",
+            operator: "+",
+            left: { type: "Number", value: 38 },
+            right: { type: "Number", value: 4 },
+          },
+        },
+      },
+    ],
   };
 
   const result = interpret(ast);
@@ -103,17 +151,25 @@ Deno.test("42 = 38 + 4", () => {
   assertEquals(result, true);
 });
 
-Deno.test("42 ~= 38 + 4", () => {
+Deno.test("42 ~= 38 + 4 ;", () => {
   const ast = {
-    type: "BinaryExpression",
-    operator: "~=",
-    left: { type: "Number", value: 42 },
-    right: {
-      type: "BinaryExpression",
-      operator: "+",
-      left: { type: "Number", value: 38 },
-      right: { type: "Number", value: 4 },
-    },
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "~=",
+          left: { type: "Number", value: 42 },
+          right: {
+            type: "BinaryExpression",
+            operator: "+",
+            left: { type: "Number", value: 38 },
+            right: { type: "Number", value: 4 },
+          },
+        },
+      },
+    ],
   };
 
   const result = interpret(ast);
@@ -121,12 +177,20 @@ Deno.test("42 ~= 38 + 4", () => {
   assertEquals(result, false);
 });
 
-Deno.test("42 < 32", () => {
+Deno.test("42 < 32 ;", () => {
   const ast = {
-    type: "BinaryExpression",
-    operator: "<",
-    left: { type: "Number", value: 42 },
-    right: { type: "Number", value: 32 },
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "<",
+          left: { type: "Number", value: 42 },
+          right: { type: "Number", value: 32 },
+        },
+      },
+    ],
   };
 
   const result = interpret(ast);
@@ -134,15 +198,53 @@ Deno.test("42 < 32", () => {
   assertEquals(result, false);
 });
 
-Deno.test("42 <= 32", () => {
+Deno.test("42 <= 32 ;", () => {
   const ast = {
-    type: "BinaryExpression",
-    operator: "<=",
-    left: { type: "Number", value: 42 },
-    right: { type: "Number", value: 32 },
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "<=",
+          left: { type: "Number", value: 42 },
+          right: { type: "Number", value: 32 },
+        },
+      },
+    ],
   };
 
   const result = interpret(ast);
 
   assertEquals(result, false);
+});
+
+Deno.test("42 + 8 ; \n 50 - 10 ;", () => {
+  const ast = {
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "+",
+          left: { type: "Number", value: 42 },
+          right: { type: "Number", value: 8 },
+        },
+      },
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "BinaryExpression",
+          operator: "-",
+          left: { type: "Number", value: 50 },
+          right: { type: "Number", value: 10 },
+        },
+      },
+    ],
+  };
+
+  const result = interpret(ast);
+
+  assertEquals(result, 40);
 });

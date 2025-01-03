@@ -1,4 +1,13 @@
 const interpret = (ast) => {
+  if (ast.type === "Program") {
+    let result;
+
+    for (const node of ast.body) {
+      result = interpret(node);
+    }
+    return result;
+  }
+
   switch (ast.type) {
     case "Number":
       return ast.value;
@@ -6,9 +15,11 @@ const interpret = (ast) => {
     case "UnaryExpression":
       return interpretUnaryExpression(ast);
 
-    case "BinaryExpression": {
+    case "BinaryExpression":
       return interpretBinaryExpression(ast);
-    }
+
+    case "ExpressionStatement":
+      return interpretExpressionStatement(ast);
 
     default: {
       throw new Error(`Unknown AST node type: ${ast.type}`);
@@ -54,6 +65,10 @@ const interpretBinaryExpression = (ast) => {
     default:
       throw new Error(`Unknown operator: ${ast.operator}`);
   }
+};
+
+const interpretExpressionStatement = (ast) => {
+  return interpret(ast.expression);
 };
 
 export { interpret };

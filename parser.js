@@ -118,7 +118,32 @@ const parse = (tokens) => {
     return left;
   };
 
-  return parseEquality();
+  const parseExpression = () => {
+    return parseEquality();
+  };
+
+  const parseExpressionStatement = () => {
+    const expression = parseExpression();
+    if (tokens[index].type === "Operator" && tokens[index].value === ";") {
+      index += 1;
+      return { type: "ExpressionStatement", expression };
+    }
+    throw new Error("Expected a semicolon");
+  };
+
+  const parseStatement = () => {
+    return parseExpressionStatement();
+  };
+
+  const parseProgram = () => {
+    const body = [];
+    while (index < tokens.length) {
+      body.push(parseStatement());
+    }
+    return { type: "Program", body };
+  };
+
+  return parseProgram();
 };
 
 export { parse };
