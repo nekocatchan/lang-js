@@ -389,8 +389,8 @@ Deno.test("set x = 42 ;", () => {
     type: "Program",
     body: [
       {
-        type: "SetStatement",
-        identifier: "x",
+        type: "Reassignment",
+        identifier: { type: "Identifier", value: "x" },
         expression: { type: "Number", value: 42 },
       },
     ],

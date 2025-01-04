@@ -1,11 +1,11 @@
 program ::= stmt*
-stmt ::= expr ';' | var_decl | set_stmt | func_def
+stmt ::= expr ';' | var_decl | reassign | func_def
 
 func_def ::= 'let' ident '(' params ')' '=' expr ';'
 params ::= ident (',' ident)*
 
 var_decl ::= 'let' ident '=' expr ';'
-set_stmt ::= 'set' ident '=' expr ';'
+reassign ::= 'set' ident '=' expr ';'
 
 func_call ::= ident '(' args ')'
 args ::= expr (',' expr)*

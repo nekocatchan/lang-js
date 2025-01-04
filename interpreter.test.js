@@ -141,8 +141,8 @@ Deno.test("変数", () => {
         expression: { type: "Number", value: 42 },
       },
       {
-        type: "SetStatement",
-        identifier: "x",
+        type: "Reassignment",
+        identifier: { type: "Identifier", value: "x" },
         expression: { type: "Number", value: 50 },
       },
       {

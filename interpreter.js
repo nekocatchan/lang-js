@@ -21,8 +21,8 @@ const interpret = (ast, env = {}) => {
     case "VariableDeclaration":
       return interpretVariableDeclaration(ast, env);
 
-    case "SetStatement":
-      return interpretSetStatement(ast, env);
+    case "Reassignment":
+      return interpretReassignment(ast, env);
 
     default: {
       throw new Error(`Unknown AST node type: ${ast.type}`);
@@ -108,16 +108,16 @@ const interpretVariableDeclaration = (ast, env) => {
   return null;
 };
 
-const interpretSetStatement = (ast, env) => {
-  const identifier = ast.identifier;
+const interpretReassignment = (ast, env) => {
+  const name = ast.identifier.value;
 
-  if (!(identifier in env)) {
+  if (!(name in env)) {
     throw new Error(`Identifier ${identifier} has not been declared`);
   }
 
   const value = interpret(ast.expression, env);
 
-  env[identifier] = value;
+  env[name] = value;
 
   return null;
 };
