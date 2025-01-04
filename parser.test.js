@@ -350,8 +350,8 @@ Deno.test("let x = 42 ;", () => {
     type: "Program",
     body: [
       {
-        type: "LetStatement",
-        identifier: "x",
+        type: "VariableDeclaration",
+        identifier: { type: "Identifier", value: "x" },
         expression: { type: "Number", value: 42 },
       },
     ],

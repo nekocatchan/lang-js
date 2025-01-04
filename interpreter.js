@@ -18,8 +18,8 @@ const interpret = (ast, env = {}) => {
     case "ExpressionStatement":
       return interpretExpressionStatement(ast, env);
 
-    case "LetStatement":
-      return interpretLetStatement(ast, env);
+    case "VariableDeclaration":
+      return interpretVariableDeclaration(ast, env);
 
     case "SetStatement":
       return interpretSetStatement(ast, env);
@@ -94,16 +94,16 @@ const interpretExpressionStatement = (ast, env) => {
   return interpret(ast.expression, env);
 };
 
-const interpretLetStatement = (ast, env) => {
-  const identifier = ast.identifier;
+const interpretVariableDeclaration = (ast, env) => {
+  const name = ast.identifier.value;
 
-  if (identifier in env) {
-    throw new Error(`Identifier ${identifier} has already been declared`);
+  if (name in env) {
+    throw new Error(`Identifier ${name} has already been declared`);
   }
 
   const value = interpret(ast.expression, env);
 
-  env[identifier] = value;
+  env[name] = value;
 
   return null;
 };

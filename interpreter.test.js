@@ -130,37 +130,14 @@ Deno.test("複数行", () => {
 
 Deno.test("変数", () => {
   // let x = 42 ;
-  // x ; # expect 42
-  const ast = {
-    type: "Program",
-    body: [
-      {
-        type: "LetStatement",
-        identifier: "x",
-        expression: { type: "Number", value: 42 },
-      },
-      {
-        type: "ExpressionStatement",
-        expression: { type: "Identifier", name: "x" },
-      },
-    ],
-  };
-
-  const result = interpret(ast);
-
-  assertEquals(result, 42);
-});
-
-Deno.test("変数再代入", () => {
-  // let x = 42 ;
   // set x = 50 ;
   // x ; # expect 50
   const ast = {
     type: "Program",
     body: [
       {
-        type: "LetStatement",
-        identifier: "x",
+        type: "VariableDeclaration",
+        identifier: { type: "Identifier", value: "x" },
         expression: { type: "Number", value: 42 },
       },
       {

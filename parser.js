@@ -134,7 +134,7 @@ const parse = (tokens) => {
     throw new Error("Expected a semicolon");
   };
 
-  const parseLetStatement = () => {
+  const parseVariableDeclaration = () => {
     if (tokens[index].type !== "Keyword" || tokens[index].value !== "let") {
       throw new Error("Expected a let keyword");
     }
@@ -142,7 +142,7 @@ const parse = (tokens) => {
     if (tokens[index].type !== "Identifier") {
       throw new Error("Expected an identifier");
     }
-    const identifier = tokens[index].value;
+    const identifier = tokens[index];
     index += 1;
     if (tokens[index].type !== "Operator" || tokens[index].value !== "=") {
       throw new Error("Expected an equal sign");
@@ -153,7 +153,7 @@ const parse = (tokens) => {
       throw new Error("Expected a semicolon");
     }
     index += 1;
-    return { type: "LetStatement", identifier, expression };
+    return { type: "VariableDeclaration", identifier, expression };
   };
 
   const parseSetStatement = () => {
@@ -180,7 +180,7 @@ const parse = (tokens) => {
 
   const parseStatement = () => {
     if (tokens[index].type === "Keyword" && tokens[index].value === "let") {
-      return parseLetStatement();
+      return parseVariableDeclaration();
     }
 
     if (tokens[index].type === "Keyword" && tokens[index].value === "set") {
