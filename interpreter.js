@@ -1,4 +1,4 @@
-const interpret = (ast, env) => {
+const interpret = (ast, env = {}) => {
   switch (ast.type) {
     case "Program":
       return interpretProgram(ast, {});
